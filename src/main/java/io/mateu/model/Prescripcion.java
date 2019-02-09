@@ -15,11 +15,14 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-public class Dosis {
+public class Prescripcion {
 
     @Id
     @GeneratedValue
     private long id;
+
+    @ManyToOne@NotNull
+    private Doctor doctor;
 
     @ManyToOne@NotNull
     private Medicamento medicamento;

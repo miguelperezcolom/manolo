@@ -1,14 +1,10 @@
 package io.mateu;
 
-import io.mateu.mdd.core.MDD;
 import io.mateu.mdd.core.annotations.Action;
 import io.mateu.mdd.core.app.SimpleMDDApplication;
-import io.mateu.mdd.core.util.Helper;
 import io.mateu.model.*;
 import io.mateu.vistas.Carrito;
 import io.mateu.vistas.Prevision;
-
-import java.util.List;
 
 public class MyApp extends SimpleMDDApplication {
 
@@ -26,21 +22,21 @@ public class MyApp extends SimpleMDDApplication {
 
 
     @Action(order = 5)
-    public Class dispensaciones() { return Dispensacion.class; }
+    public Class prescipciones() { return Prescripcion.class; }
 
     @Action(order = 6)
-    public Class dosis() { return Dosis.class; }
+    public Class dispensaciones() { return Dispensacion.class; }
 
-    @Action(order = 8)
+    @Action(order = 7)
     public Class consumos() { return Consumo.class; }
 
-    @Action(order = 9)
+    @Action(order = 8)
     public Class recetas() { return Receta.class; }
 
-    @Action(order = 10)
+    @Action(order = 9)
     public Prevision prevision() { return new Prevision(); }
 
-    @Action(order = 11)
+    @Action(order = 10)
     public Carrito carrito() { return new Carrito(); }
 
 

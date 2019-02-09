@@ -2,7 +2,6 @@ package io.mateu.model;
 
 import io.mateu.mdd.core.annotations.Ignored;
 import io.mateu.mdd.core.annotations.Output;
-import io.mateu.mdd.core.workflow.WorkflowEngine;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,7 +41,7 @@ public class Medicamento {
     private List<Consumo> consumos = new ArrayList<>();
 
     @OneToMany(mappedBy = "medicamento")@Ignored
-    private List<Dosis> dosis = new ArrayList<>();
+    private List<Prescripcion> dosis = new ArrayList<>();
 
     @OneToMany(mappedBy = "medicamento")@Ignored
     private List<Dispensacion> dispensaciones = new ArrayList<>();

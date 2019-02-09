@@ -2,12 +2,11 @@ package io.mateu.vistas;
 
 import io.mateu.mdd.core.annotations.SameLine;
 import io.mateu.mdd.core.util.Helper;
-import io.mateu.model.Dosis;
+import io.mateu.model.Prescripcion;
 import io.mateu.model.Medicamento;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -40,7 +39,7 @@ public class Prevision {
     private void actualizar() {
         necesidades = new ArrayList<>();
         try {
-            ((List<Dosis>)Helper.selectObjects("select x from Dosis x order by x.medicamento.nombre")).forEach(d -> {
+            ((List<Prescripcion>)Helper.selectObjects("select x from Dosis x order by x.medicamento.nombre")).forEach(d -> {
                 Optional<LineaPrevision> found = necesidades.stream().filter(l -> l.getMedicamento().equals(d.getMedicamento())).map(l -> {
                     l.setNecesidad(l.getNecesidad() + d.getDosisDiaria() * dias);
                     return l;
