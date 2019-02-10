@@ -1,6 +1,7 @@
 package io.mateu.vistas;
 
 import io.mateu.mdd.core.MDD;
+import io.mateu.mdd.core.annotations.Action;
 import io.mateu.mdd.core.annotations.DependsOn;
 import io.mateu.mdd.core.util.Helper;
 import io.mateu.model.Dispensacion;
@@ -8,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.EntityManager;
-import javax.xml.ws.Action;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,8 +34,8 @@ public class Carrito {
 
     public Carrito() {
         try {
-            lineas = Helper.selectObjects("select new io.mateu.vistas.LineaCarrito(x.medicamento, x.paciente, x.dosisDiaria, x.observaciones) from Dosis x where x.fin is null order by x.medicamento.nombre, x.paciente.nombre");
-            resumen = Helper.selectObjects("select new io.mateu.vistas.LineaCarritoResumen(x.medicamento, sum(x.dosisDiaria)) from Dosis x where x.fin is null group by x.medicamento order by x.medicamento.nombre");
+            lineas = Helper.selectObjects("select new io.mateu.vistas.LineaCarrito(x.medicamento, x.paciente, x.dosisDiaria, x.observaciones) from Prescripcion x where (x.inicio is null or x.inicio <= :h) and (x.fin is null or x.fin >= :h) order by x.medicamento.nombre, x.paciente.nombre", Helper.hashmap("h", LocalDate.now()));
+            resumen = Helper.selectObjects("select new io.mateu.vistas.LineaCarritoResumen(x.medicamento, sum(x.dosisDiaria)) from Prescripcion x where (x.inicio is null or x.inicio <= :h) and (x.fin is null or x.fin >= :h) group by x.medicamento order by x.medicamento.nombre", Helper.hashmap("h", LocalDate.now()));
         } catch (Throwable throwable) {
             MDD.alert(throwable);
         }
@@ -51,6 +51,7 @@ public class Carrito {
             d.setPaciente(l.getPaciente());
             em.persist(d);
         });
+        MDD.alert("Hecho");
     }
 
 }

@@ -39,5 +39,8 @@ public class MyApp extends SimpleMDDApplication {
     @Action(order = 10)
     public Carrito carrito() { return new Carrito(); }
 
-
+    @Override
+    public boolean isAuthenticationNeeded() {
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 package io.mateu.model;
 
+import io.mateu.mdd.core.annotations.*;
 import io.mateu.mdd.core.util.Helper;
 import io.mateu.mdd.core.workflow.WorkflowEngine;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Setter
+@Setter@NewNotAllowed@Indelible
 public class Consumo {
 
     @Id
@@ -19,12 +20,15 @@ public class Consumo {
     private long id;
 
     @ManyToOne
-    @NotNull
+    @NotNull@Output
+    @MainSearchFilter
     private Medicamento medicamento;
 
-    @ManyToOne@NotNull
+    @ManyToOne@NotNull@Output
+    @MainSearchFilter
     private Paciente paciente;
 
+    @Output@Sum
     private double dosisConsumidas;
 
     public void setDosisConsumidas(double dosisConsumidas) {
@@ -32,6 +36,7 @@ public class Consumo {
         actualizaCredito();
     }
 
+    @Output@Sum
     private double dosisRecetadas;
 
     public void setDosisRecetadas(double dosisRecetadas) {
@@ -39,6 +44,7 @@ public class Consumo {
         actualizaCredito();
     }
 
+    @Output@Sum
     private double credito;
 
     private void actualizaCredito() {
